@@ -1,0 +1,267 @@
+.cores-container {
+  width: 26rem;
+  min-width: 23rem;
+  max-height: 7rem;
+  padding-top: 1rem;
+  box-sizing: border-box;
+}
+.core {
+  width: 100%;
+  max-width: 27rem;
+  display: flex;
+  align-items: center;
+}
+
+.core-index {
+  width: 28px;
+  max-width: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e4e4e7;
+  font-weight: bold;
+}
+
+.core-percent {
+  width: 5.1rem;
+  color: #e4e4e7;
+  display: flex;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+.progress-bar {
+  display: flex;
+  flex-grow: 2;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 1.25rem;
+  margin-right: 1rem;
+  box-sizing: border-box;
+}
+
+.progress-bar-section {
+  width: 3px;
+  flex-shrink: 0;
+}
+
+.progress-bar > div:not(:last-child) {
+  border-right: 4px solid #222526;
+}
+
+.progress-bar + .progress-bar {
+  margin-top: 4px;
+}
+
+.progress-bar-memory {
+  width: 100%;
+  display: flex;
+  flex-grow: 2;
+  flex-shrink: 1;
+  flex-wrap: nowrap;
+  margin-right: 0.5rem;
+  height: 1.25rem;
+  box-sizing: border-box;
+}
+
+.progress-bar-memory > div:not(:last-child) {
+  border-right: 4px solid #222526;
+}
+
+.progress-bar-memory + .progress-bar-memory {
+  margin-top: 4px;
+}
+
+.progress-bar-disk {
+  width: 100%;
+  display: flex;
+  flex-grow: 2;
+  flex-shrink: 1;
+  flex-wrap: nowrap;
+  margin-right: 0.5rem;
+  height: 1.25rem;
+  box-sizing: border-box;
+}
+
+.progress-bar-disk > div:not(:last-child) {
+  border-right: 4px solid #222526;
+}
+
+.progress-bar-disk + .progress-bar-disk {
+  margin-top: 4px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: auto;
+  min-width: 24rem;
+  box-sizing: border-box;
+}
+
+.memory-and-disk-cont {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  height: auto;
+}
+
+.memory-container {
+  width: 30rem;
+  max-height: 3rem;
+  padding-top: 1rem;
+  box-sizing: border-box;
+}
+
+.progress-bar-container-memory {
+  width: 100%;
+  max-width: 100%;
+  min-width: 24rem;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.memory {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.memory-name {
+  width: 3rem;
+  height: 1.25rem;
+  color: #e4e4e7;
+  font-weight: bold;
+  margin-right: 0.4rem;
+  box-sizing: border-box;
+}
+
+.memory-percent {
+  width: 100%;
+  min-width: 9rem;
+  height: 1.25rem;
+  color: #e4e4e7;
+  font-weight: bold;
+}
+
+.progress-bar-container-disk {
+  width: 100%;
+  min-width: 24rem;
+  max-width: 31.25rem;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.disk {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.disk-name {
+  width: 2.3rem;
+  height: 1.25rem;
+  color: #e4e4e7;
+  font-weight: bold;
+  margin-right: 0.4rem;
+  box-sizing: border-box;
+}
+
+.disk-percent {
+  min-width: 10rem;
+  height: 1.25rem;
+  color: #e4e4e7;
+  font-weight: bold;
+}
+
+
+@media (max-width: 56.5rem) {
+  .memory-and-disk-cont {
+    width: 32rem;
+  }
+  .memory-container {
+    width: 30rem;
+    height: auto;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  .progress-bar-container-memory {
+    width: 100%;
+  }
+  .memory {
+    width: 100%;
+  }
+
+  .memory-name {
+    width: 100%;
+  }
+
+  .memory-percent {
+    width: 100%;
+  }
+  .progress-bar-memory {
+    width: 100%;
+  }
+
+  .progress-bar-container-disk {
+    width: 100%;
+    padding-left: .5rem;
+    box-sizing: border-box;
+  }
+  .disk {
+    width: 100%;
+  }
+  .disk-name {
+    width: 100%;
+    margin-right: .54rem;
+    box-sizing: border-box;
+  }
+  .progress-bar-disk {
+    width: 100%;
+  }
+  .disk-percent {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 33rem) {
+  .progress-bar-cont{
+    width: 100%;
+    box-sizing: border-box;
+    overflow: scroll;
+  }
+  .memory-and-disk-cont{
+    width: 31.5rem;
+  }
+  .memory-container {
+    width: 30rem;
+  }
+  .memory {
+    width: 30rem;
+  }
+  .progress-bar-container-memory {
+    width: 100%;
+  }
+  .progress-bar-memory {
+    width: 29rem;
+  }
+  .memory-percent {
+    width: 7rem;
+  }
+  .progress-bar-container-disk {
+    width: 100%;
+  }
+  
+  .disk {
+    width: 100%;
+  }
+  .disk-percent{
+    width: 100%;
+  }
+
+}
+

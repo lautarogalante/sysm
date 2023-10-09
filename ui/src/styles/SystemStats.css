@@ -1,0 +1,55 @@
+.system-cont-div {
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+}
+
+.total-percent-cpu{
+  width: 25rem;
+  padding: .2rem;
+  text-align: center;
+  border-radius: .3rem;
+  background-color: #222526;
+  color: #e4e4e7;
+  font-weight: bold;
+
+}
+.percent-memory {
+  width: 25rem;
+  padding: .2rem;
+  text-align: center;
+  border-radius: .3rem;
+  background-color: #222526;
+  color: #e4e4e7;
+  font-weight: bold;
+}
+
+.available-memory{
+  width: 25rem;
+  padding: .2rem;
+  text-align: center;
+  border-radius: .3rem;
+  background-color: #222526;
+  color: #e4e4e7;
+  font-weight: bold;
+}
+
+
+@media (max-width: 388px) {
+
+  .system-cont-div {
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .total-percent-cpu,
+  .percent-memory,
+  .available-memory {
+    width: auto;
+  }  
+}
+@media (min-width: 90rem) {
+  .system-cont-div {
+    width: 80rem;
+   
+  }
+}

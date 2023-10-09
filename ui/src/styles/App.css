@@ -1,0 +1,108 @@
+.bg-app {
+  background-color: #e4e4e7;
+}
+
+.main-cont-1 {
+  min-width: 100%;
+  height: 100%;
+  min-height: 780px;
+  box-sizing: border-box;
+}
+
+.main-cont-2 {
+  width: 100%;
+  height: 100%;
+  min-height: 780px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.progress-bar-cont {
+  width: 100%;
+  min-height: 8.3rem;
+  gap: 1.5rem;
+  display: flex;
+  padding: .1rem .2rem;
+  padding-bottom: 1rem;
+  background-color: #222526;
+  height: 8rem;
+  box-sizing: border-box;
+}
+
+.process-cont {
+  width: 90%;
+  height: 30rem;
+  display: flex;
+  overflow-x: auto; 
+}
+
+.system-cont {
+  width: 80%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  margin-bottom: 1.7rem;
+}
+
+.search-bar-cont {
+  width: 100%;
+  height: 3rem;
+}
+
+
+
+@media screen and (min-width: 1646px) and (min-height: 984px){
+  .process-cont {
+    height: 45rem;
+  }
+}
+
+@media (max-width: 56.5rem) {
+
+  .progress-bar-cont {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    padding-top: 0; 
+  }
+
+  .process-cont {
+    height: 25rem;
+  }
+}
+
+@media screen and (max-height: 777px) {
+  .process-cont {
+    height: 25rem;
+  }
+
+}
+
+
+@media (max-width: 27.438rem) {
+  .main-cont-1 {
+    min-width: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .main-cont-1 {
+    width: 100%;
+    height: 100vh;
+  }
+  .main-cont-2 {
+    justify-content: last baseline;
+  }
+
+}
+
+@media (max-width: 388px) {
+  .system-cont {
+    margin-bottom: .5rem;
+  }
+}
+
