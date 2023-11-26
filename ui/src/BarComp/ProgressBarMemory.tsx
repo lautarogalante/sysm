@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import "./styles/ProgressBar.css";
+import "../styles/ProgressBar.css";
 
 interface ProgressBarMemoryProps {
   memoryValues: any;
@@ -37,7 +37,7 @@ const ProgressBarMemory: React.FC<ProgressBarMemoryProps> = ({
           ))}
         </div>
         <div className="memory-percent">
-          {memoryUsed} / {memoryTotal}
+          <span>{memoryUsed} / {memoryTotal}</span>
         </div>
       </div>
     </div>

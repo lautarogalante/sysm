@@ -1,5 +1,5 @@
 import React from "react"
-import "./styles/ProgressBar.css"
+import "../styles/ProgressBar.css"
 
 interface ProgressBarCpuProps {
     percents: number[]

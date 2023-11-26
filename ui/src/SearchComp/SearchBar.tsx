@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './styles/SearchBar.css';
+import '../styles/SearchBar.css';
 
 interface SearchBarProps {
   onSearch: (value: string) => void;
@@ -16,6 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   return (
     <div className="bar">
       <input
+        className="input" 
         type="text"
         placeholder="Enter the PID or Process name"
         value={searchValue}

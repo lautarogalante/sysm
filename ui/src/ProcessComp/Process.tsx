@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from "react";
-import "./styles/Table.css";
+import "../styles/Table.css";
 
 export interface ProcessInfo {
   Pid: number;
@@ -14,12 +14,23 @@ interface ProcessProps {
     Processes: ProcessInfo[];
   };
   searchValue?: string;
+  Click?: () => void;
 }
 
-const Process: React.FC<ProcessProps> = ({ data, searchValue = "", }) => {
+
+const Process: React.FC<ProcessProps> = ({ data, searchValue = "", Click }) => {
   const { Processes } = data;
   const [tableHeigth, setTableHeight] = useState('auto');
   const [filteredProcesses, setFilteredProcesses] = useState<ProcessInfo[]>([]);
+  const [selectedRow, setSelectedRow] = useState(0);
+
+
+  const handleClick = (pid: number) => {
+    if(Click){
+      Click();
+    }
+    setSelectedRow(pid);
+  };
 
 useEffect(() => {
   if (Processes) {
@@ -52,7 +63,11 @@ useEffect(() => {
               key={process.Pid}
               className={`${
                 index % 2 === 0 ? "even-row" : "odd-row"
-              } ${process.Pid.toString() === searchValue || process.ProcessName === searchValue ? "selected-row" : ""}`}
+              } ${process.Pid.toString() === searchValue || process.ProcessName === searchValue ? "selected-row" : ""} 
+                ${process.Pid === selectedRow ? "selected" : ""}`}
+
+              
+              onClick={() => handleClick(process.Pid)} 
             >
               <td className="center-text">{process.Pid}</td>
               <td className="center-text">{process.User}</td>

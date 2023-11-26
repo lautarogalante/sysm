@@ -1,6 +1,6 @@
 import React from "react";
-import { convertToGb, getColor } from "./ProgressBarMemory";
-import './styles/ProgressBar.css';
+import { convertToGb, getColor } from "../BarComp/ProgressBarMemory";
+import '../styles/ProgressBar.css';
 
 interface DiskProps {
   data: any;
@@ -35,7 +35,7 @@ const Disk: React.FC<DiskProps> = ({ data }) => {
               ></div>
             ))}
           </div>
-          <div className="disk-percent">{diskUsed} / {diskTotal}</div>
+          <div className="disk-percent"><span>{diskUsed} / {diskTotal}</span></div>
         </div>
       </div>
     );

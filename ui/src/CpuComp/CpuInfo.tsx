@@ -1,4 +1,4 @@
-import ProgressBarCpu from "./ProgressBarCpu";
+import ProgressBarCpu from "../BarComp/ProgressBarCpu";
 
 interface CoresProps {
     data: any;

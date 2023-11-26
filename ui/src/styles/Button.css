@@ -1,0 +1,18 @@
+.button-cont-delete {
+    display: none;
+    background-color: #CE5A67 !important;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 2.5rem;
+    margin: 0;
+    padding: .3rem;
+}
+
+.button-cont-delete:hover {
+    border-color: #B9B4C7;
+}
+.icon {
+    width: 100%;
+    height: 100%;
+}

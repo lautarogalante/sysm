@@ -41,3 +41,6 @@ thead tr {
   height: 2rem;
 }
 
+.selected {
+  background-color: #4682A9;
+}

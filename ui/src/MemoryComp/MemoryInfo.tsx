@@ -1,4 +1,4 @@
-import ProgressBarMemory from "./ProgressBarMemory";
+import ProgressBarMemory from "../BarComp/ProgressBarMemory";
 
 interface MemoryProps {
     data: any

@@ -1,5 +1,5 @@
-import { convertToGb } from './ProgressBarMemory';
-import './styles/SystemStats.css'
+import { convertToGb } from '../BarComp/ProgressBarMemory';
+import '../styles/SystemStats.css'
 
 interface Values {
     data: any;

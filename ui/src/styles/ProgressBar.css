@@ -80,6 +80,7 @@
   flex-shrink: 1;
   flex-wrap: nowrap;
   margin-right: 0.5rem;
+  margin-left: 0.2rem;
   height: 1.25rem;
   box-sizing: border-box;
 }
@@ -179,6 +180,9 @@
 
 
 @media (max-width: 56.5rem) {
+  .cores-container{
+    padding-left: 0;
+  }
   .memory-and-disk-cont {
     width: 32rem;
   }
@@ -186,7 +190,7 @@
     width: 30rem;
     height: auto;
     padding-top: 0.5rem;
-    padding-left: 0.5rem;
+    padding-left: 0;
   }
   .progress-bar-container-memory {
     width: 100%;
@@ -208,7 +212,7 @@
 
   .progress-bar-container-disk {
     width: 100%;
-    padding-left: .5rem;
+    padding: 0;
     box-sizing: border-box;
   }
   .disk {
@@ -221,8 +225,12 @@
   }
   .progress-bar-disk {
     width: 100%;
+    margin-left: 0;
   }
   .disk-percent {
+    width: 100%;
+  }
+  .disk-percent span {
     width: 100%;
   }
 }
@@ -234,8 +242,16 @@
     box-sizing: border-box;
     overflow: scroll;
   }
+
+  .cores-container {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 1rem;
+  }
   .memory-and-disk-cont{
-    width: 31.5rem;
+    min-width: 100%;
+    padding-left: 1rem;
+    margin: 0 auto;
   }
   .memory-container {
     width: 30rem;
