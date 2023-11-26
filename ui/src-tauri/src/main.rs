@@ -10,7 +10,7 @@ fn greet(name: &str) -> String {
 use std::process::Command;
 
 fn main() {
-    let mut _child = Command::new("/usr/bin/sys_monitor")
+    let mut _child = Command::new("/usr/bin/sysm")
         .spawn()
         .expect("Error al ejecutar el binario");
 

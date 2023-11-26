@@ -1,4 +1,4 @@
-module github.com/lautarogalante/system-manager
+module github.com/lautarogalante/sysm
 
 go 1.20
 

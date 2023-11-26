@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
+	"sync"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/cpu"
@@ -21,7 +22,11 @@ import (
 )
 
 const OS_VERSION = runtime.GOOS
-const TIME_FREQUENCY = time.Millisecond * 1300
+
+var (
+	time_frequency time.Duration = time.Millisecond * 200
+	mu             sync.RWMutex
+)
 
 /*struct definition*/
 type SystemStats struct {
@@ -62,7 +67,7 @@ type ProcessInfo struct {
 func getCpuInfoLinux() (*CpuInfo, error) {
 
 	var percentTotal float64
-	percentCpu, error := cpu.Percent(TIME_FREQUENCY, true)
+	percentCpu, error := cpu.Percent(getTimeFrequency(), true)
 
 	if error != nil {
 		return nil, fmt.Errorf("Error when obtaining the cpu status")
@@ -163,6 +168,18 @@ func getProcessesStatsLinux() ([]ProcessInfo, error) {
 	return processInfo, nil
 }
 
+func setTimeFrequency(d time.Duration) {
+	mu.Lock()
+	defer mu.Unlock()
+	time_frequency = d
+}
+
+func getTimeFrequency() time.Duration {
+	mu.RLock()
+	defer mu.RUnlock()
+	return time_frequency
+}
+
 /*Method to round the values to .2f using the memory reference*/
 func roundValues(s *SystemStats) {
 
@@ -215,10 +232,10 @@ func buildTotalData() (*SystemStats, error) {
 }
 
 /*Method to handle conetions to the frontend*/
-func handleConnection(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func handleConnection(ctx context.Context, cancel context.CancelFunc, w http.ResponseWriter, r *http.Request) error {
 
 	opt := &websocket.AcceptOptions{
-    OriginPatterns: []string{"*"},
+		OriginPatterns: []string{"*"},
 	}
 
 	c, err := websocket.Accept(w, r, opt)
@@ -232,57 +249,63 @@ func handleConnection(ctx context.Context, w http.ResponseWriter, r *http.Reques
 	/*Create a channel to recive data from the frontend and send data*/
 	messages := make(chan string)
 	dataChan := make(chan *SystemStats)
-  errChan := make(chan error)
+	errChan := make(chan error)
 
-	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	go scanMessages(ctx, c, messages, errChan)
 	go sendDataToChannel(ctx, dataChan, errChan)
 
+	var changeTimeFrequency bool = false
+
 	for {
+
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 
-    case err := <-errChan:
-      log.Println(err)
+		case err := <-errChan:
+			log.Printf("Error: %v", err)
 
 		default:
-      err := sendDataToClient(ctx, c, dataChan)
+			err := sendDataToClient(ctx, c, dataChan)
 
-      if err != nil {
-        cancel()
-        return err
-      }
+			if err != nil {
+				cancel()
+				return err
+			}
 
-			time.Sleep(TIME_FREQUENCY)
+			time.Sleep(getTimeFrequency())
+		}
+
+		if !changeTimeFrequency {
+			setTimeFrequency(time.Millisecond * 1300)
+			changeTimeFrequency = true
 		}
 	}
 }
 
 /*Method to scan messages in the conection*/
-func scanMessages(ctx context.Context, c *websocket.Conn, messages chan string, errChan chan error) error{
+func scanMessages(ctx context.Context, c *websocket.Conn, messages chan string, errChan chan error) error {
 
 	for {
 		select {
 
 		case <-ctx.Done():
-			return ctx.Err() 
+			return ctx.Err()
 		default:
 
 			_, data, err := c.Read(ctx)
 
 			if websocket.CloseStatus(err) == websocket.StatusNormalClosure || err == io.EOF {
-				log.Println("Stopping..")
-				os.Exit(0)
-			}
-
-			if err != nil {
-				log.Println(err)
-        errChan <- err
+				errChan <- err
 				return nil
 			}
+
+			/*if err != nil {
+				errChan <- err
+				return nil
+			}*/
 
 			messages <- string(data)
 		}
@@ -295,17 +318,17 @@ func sendDataToChannel(ctx context.Context, dataChan chan *SystemStats, errChan 
 		select {
 
 		case <-ctx.Done():
-			return 
+			return
 		default:
 			data, err := buildTotalData()
 
 			if err != nil {
-        errChan <- err
+				errChan <- err
 				continue
 			}
 
 			dataChan <- data
-			time.Sleep(TIME_FREQUENCY)
+			time.Sleep(getTimeFrequency())
 		}
 	}
 }
@@ -327,55 +350,51 @@ func sendDataToClient(ctx context.Context, c *websocket.Conn, dataChan chan *Sys
 
 		err = c.Write(ctx, websocket.MessageText, jsonData)
 
-    if err != nil {
-      log.Println("La conexion se cerro.")
-      return err
-    }
+		if err != nil {
+			return err
+		}
 	}
-  return nil
+	return nil
 }
 
-func startServer(ctx context.Context, stopChan <-chan os.Signal) {
+func startServer(ctx context.Context, cancel context.CancelFunc, stopChan <-chan os.Signal) error {
 
 	server := &http.Server{
 		Addr: "localhost:8000",
 	}
-  
-  errChan := make(chan error)
+
+	errChan := make(chan error)
 
 	go func() {
 		http.HandleFunc("/Get", func(w http.ResponseWriter, r *http.Request) {
-			if err := handleConnection(ctx, w, r); err != nil {
-				log.Println(err)
-        errChan <- err
+			if err := handleConnection(ctx, cancel, w, r); err != nil {
+				errChan <- err
 			}
 		})
 
 		if err := server.ListenAndServe(); err != http.ErrServerClosed {
-			log.Fatalf("ListenAndServe(): %v", err)
-      errChan <- err
+			errChan <- err
 		}
 
 	}()
-  
-  select{
-  case <-stopChan:
-    log.Println("Receive stop signal")
-  case err := <-errChan:
-    log.Printf("Error handling connection: %v", err)
-  }
 
-	shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer shutdownCancel()
+	select {
+	case <-stopChan:
+		log.Println("Receive stop signal")
+	case err := <-errChan:
+		log.Printf("Connection Closed: %v", err)
+	}
 
-	if err := server.Shutdown(shutdownCtx); err != nil {
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
 		log.Printf("Shutdown error: %v\n", err)
 
 	} else {
-		log.Println("Server stopped gracefully.")
-    os.Exit(0) 
+		log.Print("Server stopped gracefully.")
+		return nil
 	}
-
+	return nil
 }
 
 func main() {
@@ -385,5 +404,10 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	startServer(ctx, stopChan)
+	err := startServer(ctx, cancel, stopChan)
+
+	if err != nil {
+		fmt.Printf("Ocurrio un Error: %v\n", err)
+	}
+
 }

@@ -2,7 +2,7 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
+    "devPath": "tauri://localhost:1420",
     "distDir": "../dist",
     "withGlobalTauri": false
   },
@@ -17,7 +17,13 @@
         "request": true
       },
       "shell": {
-        "sidecar": false,
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "../bin/system_monitor",
+            "sidecar": true
+          }
+        ],
         "all": true,
         "open": true
       }
@@ -32,6 +38,9 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
+      ],
+      "externalBin": [
+        "../bin/system_monitor"
       ]
     },
     "security": {
