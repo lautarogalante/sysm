@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import Cores from "./CpuComp/CpuInfo";
 import Memory from "./MemoryComp/MemoryInfo";
 import SystemStats from "./SystemComp/SystemStats";
-import Process from "./ProcessComp/Process";
+import Process, { returnPID } from "./ProcessComp/Process";
 import Disk from "./DiskComp/DiskStats";
 import { ProcessInfo } from "./ProcessComp/Process";
 import SearchBar from "./SearchComp/SearchBar";
 import "./styles/App.css";
 import Button from "./ButtonComp/Button";
 import Delete from "./icons/Delete";
+
+const socket = new WebSocket("ws://localhost:8000/Get");
 
 function Client() {
   interface GenericData<T> {
@@ -17,16 +19,15 @@ function Client() {
 
   const [data, setData] = useState<GenericData<any>>([]);
   const [searchValue, setSearchValue] = useState("");
-  const [display, setDisplayDelete] = useState("block");
-
+  const [display, setDisplayDelete] = useState("none");
 
   const toggleDisplay = () => {
-    setDisplayDelete(display === 'block' ? 'none' : 'block');
+      setDisplayDelete(display === 'none' ? 'block' : 'block');
   }
- 
+
+
  
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8000/Get");
     let obj: any = null;
 
     socket.addEventListener("message", function (event) {
@@ -44,6 +45,9 @@ function Client() {
     return () => clearInterval(interval);
 
   }, []);
+  
+  
+  
 
   return (
     <div className="main-cont-2">
@@ -56,7 +60,7 @@ function Client() {
       </div>
       <div className="search-bar-cont">
         <SearchBar onSearch={setSearchValue}/>
-        <Button classCss="button-cont-delete" Color="#e4e4e7" IconComponent={Delete} display={display}/>
+        <Button classCss="button-cont-delete" Color="#e4e4e7" IconComponent={Delete} display={display} Click={sendPid}/>
       </div>
       <div className="process-cont">
         {data.Processes && (
@@ -72,6 +76,11 @@ function Client() {
       </div>
     </div>
   );
+}
+
+export function sendPid(){  
+  let PID = returnPID();
+  socket.send(PID.toString());
 }
 
 export default Client;

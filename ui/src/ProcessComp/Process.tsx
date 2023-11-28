@@ -17,20 +17,22 @@ interface ProcessProps {
   Click?: () => void;
 }
 
-
+let PID: number;
 const Process: React.FC<ProcessProps> = ({ data, searchValue = "", Click }) => {
   const { Processes } = data;
   const [tableHeigth, setTableHeight] = useState('auto');
   const [filteredProcesses, setFilteredProcesses] = useState<ProcessInfo[]>([]);
   const [selectedRow, setSelectedRow] = useState(0);
 
-
   const handleClick = (pid: number) => {
     if(Click){
       Click();
     }
     setSelectedRow(pid);
+    PID = pid;
   };
+
+  
 
 useEffect(() => {
   if (Processes) {
@@ -81,5 +83,7 @@ useEffect(() => {
     );
   }
 };
-
+export function returnPID (): number {
+  return PID 
+}
 export default Process;

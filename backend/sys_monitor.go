@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
+	"strconv"
 	"sync"
 	"time"
 
@@ -266,7 +267,8 @@ func handleConnection(ctx context.Context, cancel context.CancelFunc, w http.Res
 
 		case err := <-errChan:
 			log.Printf("Error: %v", err)
-
+		case data := <-messages:
+			killPID(data)
 		default:
 			err := sendDataToClient(ctx, c, dataChan)
 
@@ -281,6 +283,24 @@ func handleConnection(ctx context.Context, cancel context.CancelFunc, w http.Res
 		if !changeTimeFrequency {
 			setTimeFrequency(time.Millisecond * 1300)
 			changeTimeFrequency = true
+		}
+	}
+}
+
+func killPID(data string) {
+	if data != "" {
+		PID, err := strconv.ParseInt(data, 10, 64)
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+		} else {
+			process, err := os.FindProcess(int(PID))
+			if err != nil {
+				log.Printf("Error to find process: %v", err)
+			}
+			err = process.Kill()
+			if err != nil {
+				log.Printf("Error to killing the process: %v", err)
+			}
 		}
 	}
 }
@@ -301,12 +321,6 @@ func scanMessages(ctx context.Context, c *websocket.Conn, messages chan string, 
 				errChan <- err
 				return nil
 			}
-
-			/*if err != nil {
-				errChan <- err
-				return nil
-			}*/
-
 			messages <- string(data)
 		}
 	}
