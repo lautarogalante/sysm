@@ -1,6 +1,6 @@
 .cores-container {
-  width: 26rem;
-  min-width: 23rem;
+  width: 28rem;
+  min-width: 27rem;
   max-height: 7rem;
   padding-top: 1rem;
   box-sizing: border-box;
@@ -13,8 +13,8 @@
 }
 
 .core-index {
-  width: 28px;
-  max-width: 28px;
+  width: 2rem;
+  max-width: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +35,7 @@
   display: flex;
   flex-grow: 2;
   flex-wrap: nowrap;
-  width: 100%;
+  width: 25rem;
   height: 1.25rem;
   margin-right: 1rem;
   box-sizing: border-box;
@@ -80,7 +80,6 @@
   flex-shrink: 1;
   flex-wrap: nowrap;
   margin-right: 0.5rem;
-  margin-left: 0.2rem;
   height: 1.25rem;
   box-sizing: border-box;
 }
@@ -94,14 +93,14 @@
 }
 
 .progress-bar-container {
-  width: 100%;
+  width: auto;
   height: auto;
   min-width: 24rem;
   box-sizing: border-box;
 }
 
 .memory-and-disk-cont {
-  width: auto;
+  width: 33rem;
   display: flex;
   flex-direction: column;
   gap: .5rem;
@@ -150,7 +149,7 @@
 .progress-bar-container-disk {
   width: 100%;
   min-width: 24rem;
-  max-width: 31.25rem;
+  max-width: 32rem;
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
@@ -163,16 +162,16 @@
 }
 
 .disk-name {
-  width: 2.3rem;
+  width: 3rem;
   height: 1.25rem;
+  margin-right: 0.7rem;
   color: #e4e4e7;
   font-weight: bold;
-  margin-right: 0.4rem;
   box-sizing: border-box;
 }
 
 .disk-percent {
-  min-width: 10rem;
+  width: 100%;
   height: 1.25rem;
   color: #e4e4e7;
   font-weight: bold;
@@ -180,17 +179,12 @@
 
 
 @media (max-width: 56.5rem) {
-  .cores-container{
-    padding-left: 0;
-  }
   .memory-and-disk-cont {
-    width: 32rem;
+    width: 33rem;
   }
   .memory-container {
     width: 30rem;
     height: auto;
-    padding-top: 0.5rem;
-    padding-left: 0;
   }
   .progress-bar-container-memory {
     width: 100%;
@@ -212,26 +206,23 @@
 
   .progress-bar-container-disk {
     width: 100%;
-    padding: 0;
     box-sizing: border-box;
   }
   .disk {
     width: 100%;
+    box-sizing: border-box;
   }
   .disk-name {
-    width: 100%;
-    margin-right: .54rem;
+    width: 3rem;
     box-sizing: border-box;
   }
   .progress-bar-disk {
     width: 100%;
-    margin-left: 0;
+    box-sizing: border-box;
   }
   .disk-percent {
     width: 100%;
-  }
-  .disk-percent span {
-    width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -241,17 +232,21 @@
     width: 100%;
     box-sizing: border-box;
     overflow: scroll;
+    align-items: baseline;
   }
 
   .cores-container {
     width: 100%;
-    margin: 0 auto;
-    padding-left: 1rem;
+  }
+  .cores {
+    width: 100%;
+  }
+  .progress-bar-container{
+    width: 100%;
   }
   .memory-and-disk-cont{
-    min-width: 100%;
-    padding-left: 1rem;
-    margin: 0 auto;
+    width: 100%;
+    padding-left: .5rem;
   }
   .memory-container {
     width: 30rem;
@@ -269,14 +264,14 @@
     width: 7rem;
   }
   .progress-bar-container-disk {
-    width: 100%;
+    width: 40rem;
   }
   
   .disk {
-    width: 100%;
+    width: 45rem;
   }
-  .disk-percent{
-    width: 100%;
+  .disk-percent span {
+    width: 10rem;
   }
 
 }
