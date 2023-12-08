@@ -23,7 +23,7 @@
 .progress-bar-cont {
   width: 100%;
   min-height: 8.3rem;
-  gap: 1.5rem;
+  gap: .5rem;
   display: flex;
   padding: .1rem .2rem;
   padding-bottom: 1rem;
@@ -66,7 +66,7 @@
   }
 }
 
-@media (max-width: 56.5rem) {
+@media (max-width: 59.875rem) {
 
   .progress-bar-cont {
     max-width: 100%;

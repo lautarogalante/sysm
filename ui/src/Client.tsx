@@ -24,8 +24,6 @@ function Client() {
   const toggleDisplay = () => {
       setDisplayDelete(display === 'none' ? 'block' : 'block');
   }
-
-
  
   useEffect(() => {
     let obj: any = null;
@@ -45,9 +43,6 @@ function Client() {
     return () => clearInterval(interval);
 
   }, []);
-  
-  
-  
 
   return (
     <div className="main-cont-2">
