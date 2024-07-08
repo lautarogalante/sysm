@@ -2,6 +2,8 @@
 
 The user interface is implemented in Tauri, React, and the backend is written in Go.
 
+https://github.com/lautarogalante/sysm/assets/69444294/1292f82d-9553-4f46-b363-3edcb2b01781
+
 ## Prerequisites for building and running the app.
 
 **1. System Dependencies**
